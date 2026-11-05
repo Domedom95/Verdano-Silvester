@@ -1,61 +1,148 @@
 <!DOCTYPE html>
+<!-- Verdano City Silvester – rote TV-Version. Einzelne index.html fuer GitHub Pages. -->
 <html lang="de">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#080e13">
+  <meta name="theme-color" content="#08090f">
   <meta name="description" content="Verdano City – der Silvester-Countdown für unsere Community. Gemeinsam zählen wir bis Mitternacht.">
   <title>Verdano City | Silvester Countdown</title>
   <style>
     :root {
       color-scheme: dark;
-      --bg: #080e13;
-      --green: #80ffbf;
-      --mint: #43d9a0;
-      --text: #f4fff9;
-      --muted: #a7b9b6;
-      --glass: rgba(12, 31, 32, .67);
+      --bg: #08090f;
+      --red: #ff3e57;
+      --red-soft: #ff8e97;
+      --text: #fff5f6;
+      --muted: #c6b6bc;
     }
     *, *::before, *::after { box-sizing: border-box; }
-    html { scroll-behavior: smooth; overflow-x: clip; }
-    body { margin: 0; position: relative; min-width: 320px; font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; background: var(--bg); color: var(--text); overflow-x: hidden; }
-    body::before { content: ""; position: absolute; inset: 0; z-index: -3; pointer-events: none; background: radial-gradient(ellipse 55% 40% at 50% 24%, rgba(33, 139, 100, .24), transparent 72%), radial-gradient(ellipse 55% 40% at 85% 0%, rgba(30, 86, 116, .14), transparent), linear-gradient(180deg, #090f17 0%, #0a161a 68%, #111c23 100%); }
-    .grain { position: fixed; inset: 0; z-index: -1; opacity: .11; pointer-events: none; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.84' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.26'/%3E%3C/svg%3E"); }
-    #fireworks { position: fixed; inset: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: 4; }
-    .site { min-height: 100vh; display: flex; flex-direction: column; position: relative; isolation: isolate; }
-    .site::before { content: ""; position: absolute; z-index: -1; width: 560px; height: 350px; left: 50%; top: 130px; transform: translateX(-50%); border-radius: 50%; background: rgba(49, 202, 145, .12); filter: blur(90px); pointer-events: none; }
-    header { width: min(1180px, calc(100% - 44px)); margin: 0 auto; padding: 30px 0; display: flex; justify-content: space-between; align-items: center; gap: 16px; }
-    .brand { display: flex; align-items: center; gap: 11px; color: white; text-decoration: none; font-size: 15px; font-weight: 850; letter-spacing: .16em; }
-    .logo { width: 43px; height: 43px; display: grid; place-items: center; border: 1px solid rgba(128, 255, 191, .45); border-radius: 13px; transform: rotate(-8deg); background: linear-gradient(145deg, rgba(111,255,185,.17), rgba(21,74,62,.15)); box-shadow: 0 0 32px rgba(57, 229, 158, .12); }
-    .logo svg { width: 27px; height: 27px; transform: rotate(8deg); }
-    .status { font-size: 11px; color: #bce7d4; border: 1px solid rgba(128, 255, 191, .18); border-radius: 99px; padding: 11px 15px; display: flex; gap: 9px; align-items: center; letter-spacing: .12em; font-weight: 750; background: rgba(16, 38, 36, .56); }
-    .status-dot { width: 7px; height: 7px; background: var(--green); border-radius: 50%; box-shadow: 0 0 12px var(--green); animation: pulse 2s infinite; }
-    main { width: min(1110px, calc(100% - 40px)); margin: 0 auto; flex: 1; text-align: center; padding: clamp(55px, 9vh, 115px) 0 240px; }
-    .eyebrow { display: inline-flex; gap: 9px; align-items: center; padding: 9px 16px; border: 1px solid rgba(128, 255, 191, .23); background: rgba(24, 78, 66, .25); border-radius: 999px; color: #a0f4cb; font-size: 11px; font-weight: 750; letter-spacing: .24em; text-transform: uppercase; }
-    .eyebrow span { font-size: 15px; }
-    h1 { margin: 23px 0 0; font-size: clamp(60px, 11.6vw, 146px); letter-spacing: -.085em; line-height: .95; font-weight: 900; text-shadow: 0 15px 45px rgba(0,0,0,.28); }
-    h1 em { font-style: normal; background: linear-gradient(125deg, #ecfff5 12%, #abfcd1 45%, #42cc9c 90%); -webkit-background-clip: text; background-clip: text; color: transparent; }
-    .headline-small { display: block; font-size: clamp(29px, 6.5vw, 61px); margin-top: 18px; letter-spacing: -.045em; font-weight: 800; }
-    .subtitle { color: var(--muted); font-size: clamp(14px, 2vw, 17px); margin: 25px auto 0; max-width: 660px; line-height: 1.7; }
-    .countdown { display: grid; grid-template-columns: repeat(4, minmax(0,1fr)); gap: clamp(9px, 1.5vw, 19px); margin: 49px auto 0; width: min(900px, 100%); }
-    .time-card { position: relative; overflow: hidden; min-width: 0; padding: clamp(16px, 3.5vw, 33px) 8px clamp(18px, 2.5vw, 28px); background: linear-gradient(155deg, rgba(30, 61, 57, .78), rgba(10, 25, 28, .78)); border: 1px solid rgba(143, 244, 192, .20); border-radius: 20px; box-shadow: 0 18px 65px rgba(0,0,0,.23), inset 0 1px rgba(255,255,255,.07); backdrop-filter: blur(10px); }
-    .time-card::before { content:""; height: 2px; width: 68%; position: absolute; top:0; left:16%; background: linear-gradient(90deg, transparent, rgba(114,255,185,.68), transparent); }
-    .time-value { display: block; font-size: clamp(43px, 8vw, 92px); line-height: 1.15; font-weight: 850; letter-spacing: -.075em; font-variant-numeric: tabular-nums; }
-    .time-label { display: block; margin-top: 13px; color: #96bdb0; font-size: clamp(10px,1.3vw,13px); letter-spacing: .22em; font-weight: 800; }
-    .date-line { display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 10px; color: #d9ece5; font-size: 13px; font-weight: 550; margin-top: 35px; }
-    .date-line svg { color: var(--green); }
-    .date-line b { font-weight: 500; color: #577b75; }
-    .cta { margin-top: 30px; border: 1px solid rgba(118, 244, 183, .38); border-radius: 999px; background: rgba(87, 210, 152, .13); padding: 13px 20px; color: #caffdf; font: inherit; font-size: 13px; cursor: pointer; transition: background .2s, transform .2s; }
-    .cta:hover { background: rgba(87, 210, 152, .21); transform: translateY(-2px); }
-    .cta:focus-visible { outline: 2px solid var(--green); outline-offset: 4px; }
-    .skyline { position: absolute; bottom: 0; left: 0; width: 100%; z-index: -1; height: 260px; overflow: hidden; pointer-events:none; }
+    html, body { width: 100%; height: 100%; margin: 0; overflow: hidden; }
+    body {
+      min-width: 320px;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: #08090f;
+      color: var(--text);
+      -webkit-font-smoothing: antialiased;
+    }
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background:
+        radial-gradient(ellipse 44% 38% at 50% 29%, rgba(160, 24, 49, .27), transparent 78%),
+        radial-gradient(ellipse 32% 52% at 80% 43%, rgba(110, 23, 52, .12), transparent 85%),
+        linear-gradient(180deg, #0a0c15 0%, #100b13 55%, #0b0e15 100%);
+    }
+    .grain {
+      position: fixed; inset: 0; pointer-events: none; z-index: 1; opacity: .10;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.84' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.26'/%3E%3C/svg%3E");
+    }
+    #fireworks { position: fixed; inset: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: 6; }
+    .site {
+      height: 100vh; height: 100dvh;
+      min-height: 0; width: 100%;
+      display: flex; flex-direction: column;
+      position: relative; isolation: isolate;
+      overflow: hidden;
+    }
+    .site::before {
+      content: ""; position: absolute; z-index: -1;
+      width: min(54vw, 720px); height: min(40vh, 370px); left: 50%; top: 20%;
+      transform: translateX(-50%); border-radius: 50%;
+      background: rgba(225, 31, 62, .13); filter: blur(76px); pointer-events: none;
+    }
+    header {
+      width: min(1220px, 91%); margin: 0 auto;
+      padding: clamp(12px, 2.4vh, 25px) 0;
+      display: flex; flex: 0 0 auto;
+      justify-content: space-between; align-items: center; gap: 14px;
+      position: relative; z-index: 2;
+    }
+    .brand { display: flex; align-items: center; gap: 11px; color: #fff; text-decoration: none; font-size: clamp(11px, 1.1vw, 15px); font-weight: 850; letter-spacing: .16em; }
+    .logo { width: clamp(32px, 4.3vh, 43px); height: clamp(32px, 4.3vh, 43px); flex: 0 0 auto; display: grid; place-items: center; border: 1px solid rgba(255, 99, 116, .52); border-radius: 12px; transform: rotate(-8deg); background: linear-gradient(145deg, rgba(243,48,78,.20), rgba(81,17,32,.18)); box-shadow: 0 0 32px rgba(244, 46, 78, .13); }
+    .logo svg { width: 70%; height: 70%; transform: rotate(8deg); }
+    .status { font-size: clamp(9px, .8vw, 11px); color: #ffb9c2; border: 1px solid rgba(255, 99, 116, .25); border-radius: 99px; padding: clamp(7px, 1.1vh, 10px) 14px; display: flex; gap: 9px; align-items: center; letter-spacing: .12em; font-weight: 750; background: rgba(61, 16, 32, .49); white-space: nowrap; }
+    .status-dot { width: 7px; height: 7px; flex:0 0 7px; background: #ff556c; border-radius: 50%; box-shadow: 0 0 12px #ff556c; animation: pulse 2s infinite; }
+    main {
+      width: min(1100px, 91%); margin: 0 auto;
+      flex: 1 1 auto; min-height: 0;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      text-align: center;
+      padding: clamp(6px, 1.4vh, 16px) 0 clamp(48px, 10.2vh, 100px);
+      position: relative; z-index: 2;
+    }
+    .eyebrow { display: inline-flex; gap: 9px; align-items: center; padding: clamp(6px, .95vh, 9px) 15px; border: 1px solid rgba(255, 100, 120, .32); background: rgba(100, 18, 37, .26); border-radius: 999px; color: #ffb4bf; font-size: clamp(9px, .83vw, 11px); font-weight: 750; letter-spacing: .21em; text-transform: uppercase; white-space: nowrap; }
+    .eyebrow span { font-size: 13px; }
+    h1 { margin: clamp(9px, 1.7vh, 17px) 0 0; font-size: clamp(50px, min(9.3vw, 13.5vh), 124px); letter-spacing: -.085em; line-height: .97; font-weight: 900; text-shadow: 0 12px 38px rgba(0,0,0,.3); }
+    h1 em { font-style: normal; background: linear-gradient(120deg, #fff2f3 6%, #ff9aa5 42%, #fb3653 93%); -webkit-background-clip: text; background-clip: text; color: transparent; }
+    .headline-small { display: block; font-size: clamp(26px, min(4vw, 6.2vh), 54px); margin-top: clamp(5px, 1vh, 10px); letter-spacing: -.035em; font-weight: 850; color: #fff8f8; }
+    .subtitle { color: var(--muted); font-size: clamp(11px, min(1.24vw, 2vh), 16px); margin: clamp(10px, 1.7vh, 18px) auto 0; max-width: 670px; line-height: 1.5; }
+    .countdown { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: clamp(8px, 1.3vw, 16px); margin: clamp(17px, 3.0vh, 32px) auto 0; width: min(870px, 100%); }
+    .time-card { position: relative; overflow: hidden; min-width: 0; padding: clamp(12px, 2vh, 23px) 7px clamp(10px, 1.7vh, 19px); background: linear-gradient(155deg, rgba(75, 29, 44, .68), rgba(21, 14, 25, .85)); border: 1px solid rgba(255, 110, 129, .27); border-radius: clamp(12px, 1.5vw, 19px); box-shadow: 0 16px 44px rgba(0,0,0,.22), inset 0 1px rgba(255,255,255,.055); backdrop-filter: blur(9px); }
+    .time-card::before { content: ""; height: 2px; width: 72%; position: absolute; top: 0; left: 14%; background: linear-gradient(90deg, transparent, rgba(255,95,119,.79), transparent); }
+    .time-value { display: block; font-size: clamp(38px, min(6.4vw, 10vh), 78px); line-height: 1.08; font-weight: 850; letter-spacing: -.06em; font-variant-numeric: tabular-nums; color: #fffaf9; }
+    .time-label { display: block; margin-top: clamp(4px, 1vh, 9px); color: #e3a1ad; font-size: clamp(9px, .85vw, 12px); letter-spacing: .18em; font-weight: 800; }
+    .date-line { display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 9px; color: #eee0e3; font-size: clamp(11px, 1vw, 13px); font-weight: 550; margin-top: clamp(12px, 2.3vh, 23px); }
+    .date-line svg { color: var(--red-soft); }
+    .date-line b { font-weight: 500; color: #8f5564; }
+    .cta { margin-top: clamp(11px, 1.9vh, 19px); border: 1px solid rgba(255, 107, 127, .44); border-radius: 999px; background: rgba(228, 40, 74, .15); padding: clamp(9px, 1.2vh, 12px) 20px; color: #ffd4db; font: inherit; font-size: clamp(11px, .95vw, 13px); cursor: pointer; transition: background .2s, transform .2s; }
+    .cta:hover { background: rgba(228, 40, 74, .27); transform: translateY(-2px); }
+    .cta:focus-visible { outline: 2px solid var(--red); outline-offset: 4px; }
+    .skyline { position: absolute; bottom: 0; left: 0; width: 100%; z-index: -1; height: clamp(90px, 19vh, 190px); overflow: hidden; pointer-events: none; }
     .skyline svg { display: block; width: 100%; height: 100%; overflow: hidden; }
-    .skyline::after { content:""; position:absolute; inset:auto 0 0; height:32px; background: linear-gradient(0deg,#080f13,transparent); }
-    footer { position: relative; text-align: center; border-top: 1px solid rgba(128, 255, 191, .08); padding: 20px; color: #7d9e98; font-size: 11px; letter-spacing: .12em; background: rgba(7, 14, 17, .82); }
-    @keyframes pulse { 0%,100% { opacity:1; } 50%{ opacity:.35; } }
-    @media(max-width:650px) { header { padding:20px 0; } .brand { font-size:12px; letter-spacing:.07em; } .logo { width:39px; height:39px; } .status { font-size:9px; padding:9px 11px; letter-spacing:.05em; } main { padding-top: 56px; padding-bottom:180px; } .countdown { margin-top:35px; } .time-card { border-radius:12px; } .time-label { letter-spacing:.08em; margin-top:9px; } .date-line { line-height:1.6; } .skyline {height:190px;} }
-    @media(max-width:385px) { .time-value {font-size:38px} .brand {font-size:10px;} }
-    @media(prefers-reduced-motion:reduce) { *, *::before, *::after { animation-duration:.001ms !important; scroll-behavior:auto !important; transition-duration:.001ms !important; } }
+    .skyline::after { content: ""; position: absolute; inset: auto 0 0; height: 22px; background: linear-gradient(0deg, #08090e, transparent); }
+    footer { flex: 0 0 auto; position: relative; z-index: 2; text-align: center; border-top: 1px solid rgba(255, 115, 127, .1); padding: clamp(8px, 1.4vh, 13px); color: #a78690; font-size: clamp(9px, .75vw, 11px); letter-spacing: .12em; background: rgba(8, 9, 15, .88); }
+    @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: .35; } }
+    @media (max-height: 700px) {
+      header { padding: 9px 0; }
+      main { padding-top: 4px; padding-bottom: 30px; }
+      h1 { margin-top: 7px; }
+      .subtitle { margin-top: 8px; }
+      .countdown { margin-top: 12px; }
+      .date-line { margin-top: 10px; }
+      .cta { margin-top: 9px; }
+      .skyline { height: 95px; }
+    }
+    @media (max-height: 500px) and (min-width: 520px) {
+      .subtitle, .cta { display: none; }
+      .eyebrow { padding: 5px 12px; }
+      .time-card { padding: 7px; }
+      h1 { font-size: min(9.3vw, 15vh); }
+      main { padding-bottom: 14px; }
+      .skyline { height: 60px; }
+    }
+    @media (max-height: 330px) {
+      .eyebrow, .subtitle, .cta, .date-line, footer { display: none; }
+      header { padding: 4px 0; }
+      main { padding: 0; }
+      h1 { margin-top: 0; font-size: clamp(30px, 12vh, 60px); }
+      .headline-small { font-size: clamp(19px, 7vh, 30px); }
+      .countdown { margin-top: 9px; }
+      .time-card { padding: 5px 3px; }
+      .time-value { font-size: clamp(24px, 10vh, 48px); }
+      .time-label { margin-top: 1px; }
+      .skyline { height: 35px; }
+    }
+    @media (max-width: 650px) {
+      header { width: 94%; }
+      .brand { letter-spacing: .06em; font-size: 10px; gap: 6px; }
+      .status { padding: 7px 9px; font-size: 9px; letter-spacing: .02em; }
+      main { width: 96%; padding-bottom: clamp(28px, 8vh, 62px); }
+      h1 { font-size: clamp(40px, 10vw, 76px); }
+      .headline-small { font-size: clamp(23px, 6vw, 42px); }
+      .countdown { width: 100%; gap: 6px; }
+      .time-card { border-radius: 11px; padding: 15px 3px; }
+      .time-value { font-size: clamp(29px, 8.1vw, 57px); }
+      .time-label { font-size: 8px; letter-spacing: .035em; }
+      .eyebrow { letter-spacing: .09em; }
+      .subtitle { padding: 0 8px; }
+      .date-line { font-size: 10px; gap: 6px; }
+      footer { letter-spacing: .035em; }
+    }
+    @media (max-width: 380px) { .brand { font-size: 9px; } .status { font-size: 8px; } h1 { font-size: 40px; } }
+    @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: .001ms !important; transition-duration: .001ms !important; } }
   </style>
 </head>
 <body>
@@ -64,7 +151,7 @@
   <div class="site">
     <header>
       <a class="brand" href="#start" aria-label="Verdano City – zur Startseite">
-        <span class="logo"><svg viewBox="0 0 36 36" fill="none" aria-hidden="true"><path d="M4 7L17 29H21L33 7H24L19 19L13 7H4Z" fill="#91F9C5"/><path d="M24 7L19 19" stroke="#E5FFF2" stroke-width="1.5"/></svg></span>
+        <span class="logo"><svg viewBox="0 0 36 36" fill="none" aria-hidden="true"><path d="M4 7L17 29H21L33 7H24L19 19L13 7H4Z" fill="#FF5A71"/><path d="M24 7L19 19" stroke="#FFE3E7" stroke-width="1.5"/></svg></span>
         <span>VERDANO CITY</span>
       </a>
       <div class="status"><span class="status-dot"></span><span>LIVE COUNTDOWN</span></div>
@@ -85,13 +172,13 @@
     <div class="skyline" aria-hidden="true">
       <svg preserveAspectRatio="none" viewBox="0 0 1440 260" xmlns="http://www.w3.org/2000/svg">
         <defs>
-          <linearGradient id="city" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#173330"/><stop offset="1" stop-color="#071216"/></linearGradient>
-          <pattern id="windows" x="0" y="0" width="25" height="22" patternUnits="userSpaceOnUse"><rect x="7" y="7" width="5" height="7" rx="1" fill="#75e7ac" opacity=".33"/><rect x="19" y="7" width="4" height="7" rx="1" fill="#6baf9e" opacity=".17"/></pattern>
+          <linearGradient id="city" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#38202d"/><stop offset="1" stop-color="#0d0b13"/></linearGradient>
+          <pattern id="windows" x="0" y="0" width="25" height="22" patternUnits="userSpaceOnUse"><rect x="7" y="7" width="5" height="7" rx="1" fill="#ff607a" opacity=".33"/><rect x="19" y="7" width="4" height="7" rx="1" fill="#bc5a75" opacity=".17"/></pattern>
         </defs>
-        <path fill="#142927" opacity=".6" d="M0 124h76V98h85v47h50V80h48v25h77V75h67v68h84V89h95v26h60V55h72v48h78V72h78v58h68V86h83v40h69V100h79v-20h80v34h68V89h70v46h80v125H0z"/>
+        <path fill="#311b29" opacity=".6" d="M0 124h76V98h85v47h50V80h48v25h77V75h67v68h84V89h95v26h60V55h72v48h78V72h78v58h68V86h83v40h69V100h79v-20h80v34h68V89h70v46h80v125H0z"/>
         <path fill="url(#city)" d="M0 165h50v-32h51v30h48V96h78v34h43v45h47V119h58v49h34V90h85v72h42v-41h62V73h36V51h10V24h5v27h10v22h35v93h52v-43h49v37h49V94h85v69h46v-59h54v58h57v-45h91v55h46V76h61v-28h4v28h39v100h48V130h72v35h50V92h70v83h57v-46h72v131H0z"/>
         <path fill="url(#windows)" opacity=".52" d="M0 165h50v-32h51v30h48V96h78v34h43v45h47V119h58v49h34V90h85v72h42v-41h62V73h36V51h10V24h5v27h10v22h35v93h52v-43h49v37h49V94h85v69h46v-59h54v58h57v-45h91v55h46V76h61v-28h4v28h39v100h48V130h72v35h50V92h70v83h57v-46h72v131H0z"/>
-        <path fill="#081318" d="M0 205h160v-25h104v34h152v-29h146v30h108v-17h139v23h144v-31h160v23h105v-19h122v66H0z"/>
+        <path fill="#0b0b14" d="M0 205h160v-25h104v34h152v-29h146v30h108v-17h139v23h144v-31h160v23h105v-19h122v66H0z"/>
       </svg>
     </div>
     <footer>© <span id="footer-year">2026</span> VERDANO CITY <span aria-hidden="true">·</span> GEMEINSAM INS NEUE JAHR</footer>
@@ -163,7 +250,7 @@
     function burst() {
       const x = width * (.15 + Math.random() * .7);
       const y = height * (.12 + Math.random() * .44);
-      const hue = [151, 174, 199, 45, 320][Math.floor(Math.random() * 5)];
+      const hue = [352, 9, 24, 42, 332][Math.floor(Math.random() * 5)];
       const count = reducedMotion.matches ? 24 : 74;
       for (let i = 0; i < count; i++) {
         const angle = Math.PI * 2 * i / count;
