@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#080e13">
+  <meta name="description" content="Verdano City – der Silvester-Countdown für unsere Community. Gemeinsam zählen wir bis Mitternacht.">
+  <title>Verdano City | Silvester Countdown</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #080e13;
+      --green: #80ffbf;
+      --mint: #43d9a0;
+      --text: #f4fff9;
+      --muted: #a7b9b6;
+      --glass: rgba(12, 31, 32, .67);
+    }
+    *, *::before, *::after { box-sizing: border-box; }
+    html { scroll-behavior: smooth; overflow-x: clip; }
+    body { margin: 0; position: relative; min-width: 320px; font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; background: var(--bg); color: var(--text); overflow-x: hidden; }
+    body::before { content: ""; position: absolute; inset: 0; z-index: -3; pointer-events: none; background: radial-gradient(ellipse 55% 40% at 50% 24%, rgba(33, 139, 100, .24), transparent 72%), radial-gradient(ellipse 55% 40% at 85% 0%, rgba(30, 86, 116, .14), transparent), linear-gradient(180deg, #090f17 0%, #0a161a 68%, #111c23 100%); }
+    .grain { position: fixed; inset: 0; z-index: -1; opacity: .11; pointer-events: none; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.84' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.26'/%3E%3C/svg%3E"); }
+    #fireworks { position: fixed; inset: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: 4; }
+    .site { min-height: 100vh; display: flex; flex-direction: column; position: relative; isolation: isolate; }
+    .site::before { content: ""; position: absolute; z-index: -1; width: 560px; height: 350px; left: 50%; top: 130px; transform: translateX(-50%); border-radius: 50%; background: rgba(49, 202, 145, .12); filter: blur(90px); pointer-events: none; }
+    header { width: min(1180px, calc(100% - 44px)); margin: 0 auto; padding: 30px 0; display: flex; justify-content: space-between; align-items: center; gap: 16px; }
+    .brand { display: flex; align-items: center; gap: 11px; color: white; text-decoration: none; font-size: 15px; font-weight: 850; letter-spacing: .16em; }
+    .logo { width: 43px; height: 43px; display: grid; place-items: center; border: 1px solid rgba(128, 255, 191, .45); border-radius: 13px; transform: rotate(-8deg); background: linear-gradient(145deg, rgba(111,255,185,.17), rgba(21,74,62,.15)); box-shadow: 0 0 32px rgba(57, 229, 158, .12); }
+    .logo svg { width: 27px; height: 27px; transform: rotate(8deg); }
+    .status { font-size: 11px; color: #bce7d4; border: 1px solid rgba(128, 255, 191, .18); border-radius: 99px; padding: 11px 15px; display: flex; gap: 9px; align-items: center; letter-spacing: .12em; font-weight: 750; background: rgba(16, 38, 36, .56); }
+    .status-dot { width: 7px; height: 7px; background: var(--green); border-radius: 50%; box-shadow: 0 0 12px var(--green); animation: pulse 2s infinite; }
+    main { width: min(1110px, calc(100% - 40px)); margin: 0 auto; flex: 1; text-align: center; padding: clamp(55px, 9vh, 115px) 0 240px; }
+    .eyebrow { display: inline-flex; gap: 9px; align-items: center; padding: 9px 16px; border: 1px solid rgba(128, 255, 191, .23); background: rgba(24, 78, 66, .25); border-radius: 999px; color: #a0f4cb; font-size: 11px; font-weight: 750; letter-spacing: .24em; text-transform: uppercase; }
+    .eyebrow span { font-size: 15px; }
+    h1 { margin: 23px 0 0; font-size: clamp(60px, 11.6vw, 146px); letter-spacing: -.085em; line-height: .95; font-weight: 900; text-shadow: 0 15px 45px rgba(0,0,0,.28); }
+    h1 em { font-style: normal; background: linear-gradient(125deg, #ecfff5 12%, #abfcd1 45%, #42cc9c 90%); -webkit-background-clip: text; background-clip: text; color: transparent; }
+    .headline-small { display: block; font-size: clamp(29px, 6.5vw, 61px); margin-top: 18px; letter-spacing: -.045em; font-weight: 800; }
+    .subtitle { color: var(--muted); font-size: clamp(14px, 2vw, 17px); margin: 25px auto 0; max-width: 660px; line-height: 1.7; }
+    .countdown { display: grid; grid-template-columns: repeat(4, minmax(0,1fr)); gap: clamp(9px, 1.5vw, 19px); margin: 49px auto 0; width: min(900px, 100%); }
+    .time-card { position: relative; overflow: hidden; min-width: 0; padding: clamp(16px, 3.5vw, 33px) 8px clamp(18px, 2.5vw, 28px); background: linear-gradient(155deg, rgba(30, 61, 57, .78), rgba(10, 25, 28, .78)); border: 1px solid rgba(143, 244, 192, .20); border-radius: 20px; box-shadow: 0 18px 65px rgba(0,0,0,.23), inset 0 1px rgba(255,255,255,.07); backdrop-filter: blur(10px); }
+    .time-card::before { content:""; height: 2px; width: 68%; position: absolute; top:0; left:16%; background: linear-gradient(90deg, transparent, rgba(114,255,185,.68), transparent); }
+    .time-value { display: block; font-size: clamp(43px, 8vw, 92px); line-height: 1.15; font-weight: 850; letter-spacing: -.075em; font-variant-numeric: tabular-nums; }
+    .time-label { display: block; margin-top: 13px; color: #96bdb0; font-size: clamp(10px,1.3vw,13px); letter-spacing: .22em; font-weight: 800; }
+    .date-line { display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 10px; color: #d9ece5; font-size: 13px; font-weight: 550; margin-top: 35px; }
+    .date-line svg { color: var(--green); }
+    .date-line b { font-weight: 500; color: #577b75; }
+    .cta { margin-top: 30px; border: 1px solid rgba(118, 244, 183, .38); border-radius: 999px; background: rgba(87, 210, 152, .13); padding: 13px 20px; color: #caffdf; font: inherit; font-size: 13px; cursor: pointer; transition: background .2s, transform .2s; }
+    .cta:hover { background: rgba(87, 210, 152, .21); transform: translateY(-2px); }
+    .cta:focus-visible { outline: 2px solid var(--green); outline-offset: 4px; }
+    .skyline { position: absolute; bottom: 0; left: 0; width: 100%; z-index: -1; height: 260px; overflow: hidden; pointer-events:none; }
+    .skyline svg { display: block; width: 100%; height: 100%; overflow: hidden; }
+    .skyline::after { content:""; position:absolute; inset:auto 0 0; height:32px; background: linear-gradient(0deg,#080f13,transparent); }
+    footer { position: relative; text-align: center; border-top: 1px solid rgba(128, 255, 191, .08); padding: 20px; color: #7d9e98; font-size: 11px; letter-spacing: .12em; background: rgba(7, 14, 17, .82); }
+    @keyframes pulse { 0%,100% { opacity:1; } 50%{ opacity:.35; } }
+    @media(max-width:650px) { header { padding:20px 0; } .brand { font-size:12px; letter-spacing:.07em; } .logo { width:39px; height:39px; } .status { font-size:9px; padding:9px 11px; letter-spacing:.05em; } main { padding-top: 56px; padding-bottom:180px; } .countdown { margin-top:35px; } .time-card { border-radius:12px; } .time-label { letter-spacing:.08em; margin-top:9px; } .date-line { line-height:1.6; } .skyline {height:190px;} }
+    @media(max-width:385px) { .time-value {font-size:38px} .brand {font-size:10px;} }
+    @media(prefers-reduced-motion:reduce) { *, *::before, *::after { animation-duration:.001ms !important; scroll-behavior:auto !important; transition-duration:.001ms !important; } }
+  </style>
+</head>
+<body>
+  <canvas id="fireworks" aria-hidden="true"></canvas>
+  <div class="grain" aria-hidden="true"></div>
+  <div class="site">
+    <header>
+      <a class="brand" href="#start" aria-label="Verdano City – zur Startseite">
+        <span class="logo"><svg viewBox="0 0 36 36" fill="none" aria-hidden="true"><path d="M4 7L17 29H21L33 7H24L19 19L13 7H4Z" fill="#91F9C5"/><path d="M24 7L19 19" stroke="#E5FFF2" stroke-width="1.5"/></svg></span>
+        <span>VERDANO CITY</span>
+      </a>
+      <div class="status"><span class="status-dot"></span><span>LIVE COUNTDOWN</span></div>
+    </header>
+    <main id="start">
+      <div class="eyebrow"><span aria-hidden="true">✦</span> DIE LETZTE NACHT DES JAHRES <span aria-hidden="true">✦</span></div>
+      <h1><em>SILVESTER</em><span class="headline-small" id="year-title">2026 → 2027</span></h1>
+      <p class="subtitle" id="description">Eine Stadt. Ein Moment. Tausend Erinnerungen.<br>Verdano City zählt gemeinsam die Sekunden bis zum neuen Jahr.</p>
+      <section class="countdown" aria-label="Countdown bis Neujahr" role="timer" aria-live="off">
+        <div class="time-card"><span class="time-value" id="days">000</span><span class="time-label">TAGE</span></div>
+        <div class="time-card"><span class="time-value" id="hours">00</span><span class="time-label">STUNDEN</span></div>
+        <div class="time-card"><span class="time-value" id="minutes">00</span><span class="time-label">MINUTEN</span></div>
+        <div class="time-card"><span class="time-value" id="seconds">00</span><span class="time-label">SEKUNDEN</span></div>
+      </section>
+      <div class="date-line"><svg width="17" height="17" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8" fill="none" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M7 3v4M17 3v4M3 10h18"/></svg><span id="date-label">1. Januar 2027</span><b>•</b><span>00:00 Uhr (Berlin / MEZ)</span></div>
+      <button class="cta" id="test-fireworks" type="button">✧ Feuerwerk ansehen</button>
+    </main>
+    <div class="skyline" aria-hidden="true">
+      <svg preserveAspectRatio="none" viewBox="0 0 1440 260" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="city" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#173330"/><stop offset="1" stop-color="#071216"/></linearGradient>
+          <pattern id="windows" x="0" y="0" width="25" height="22" patternUnits="userSpaceOnUse"><rect x="7" y="7" width="5" height="7" rx="1" fill="#75e7ac" opacity=".33"/><rect x="19" y="7" width="4" height="7" rx="1" fill="#6baf9e" opacity=".17"/></pattern>
+        </defs>
+        <path fill="#142927" opacity=".6" d="M0 124h76V98h85v47h50V80h48v25h77V75h67v68h84V89h95v26h60V55h72v48h78V72h78v58h68V86h83v40h69V100h79v-20h80v34h68V89h70v46h80v125H0z"/>
+        <path fill="url(#city)" d="M0 165h50v-32h51v30h48V96h78v34h43v45h47V119h58v49h34V90h85v72h42v-41h62V73h36V51h10V24h5v27h10v22h35v93h52v-43h49v37h49V94h85v69h46v-59h54v58h57v-45h91v55h46V76h61v-28h4v28h39v100h48V130h72v35h50V92h70v83h57v-46h72v131H0z"/>
+        <path fill="url(#windows)" opacity=".52" d="M0 165h50v-32h51v30h48V96h78v34h43v45h47V119h58v49h34V90h85v72h42v-41h62V73h36V51h10V24h5v27h10v22h35v93h52v-43h49v37h49V94h85v69h46v-59h54v58h57v-45h91v55h46V76h61v-28h4v28h39v100h48V130h72v35h50V92h70v83h57v-46h72v131H0z"/>
+        <path fill="#081318" d="M0 205h160v-25h104v34h152v-29h146v30h108v-17h139v23h144v-31h160v23h105v-19h122v66H0z"/>
+      </svg>
+    </div>
+    <footer>© <span id="footer-year">2026</span> VERDANO CITY <span aria-hidden="true">·</span> GEMEINSAM INS NEUE JAHR</footer>
+  </div>
+  <script>
+    // Alle Besucher zählen zur gleichen Mitternacht in der Zeitzone Europe/Berlin.
+    const formatter = new Intl.DateTimeFormat('en-US', { timeZone: 'Europe/Berlin', year: 'numeric' });
+    const berlinYear = () => Number(formatter.format(new Date()));
+    // Der 1. Januar um 00:00 Uhr in Berlin entspricht am 31. Dezember um 23:00 UTC.
+    const newYearTimestamp = (year) => Date.UTC(year - 1, 11, 31, 23, 0, 0);
+    const elements = Object.fromEntries(['days','hours','minutes','seconds'].map(id => [id, document.getElementById(id)]));
+    const title = document.getElementById('year-title');
+    const date = document.getElementById('date-label');
+    const description = document.getElementById('description');
+    const footerYear = document.getElementById('footer-year');
+    let celebrationLaunched = false;
+    let lastDisplayYear = null;
+
+    function updateCountdown() {
+      const now = Date.now();
+      const currentYear = berlinYear();
+      const todayNewYear = newYearTimestamp(currentYear);
+      // In den ersten 10 Minuten des neuen Jahres die Gratulation zeigen.
+      const celebrating = now >= todayNewYear && now < todayNewYear + 10 * 60 * 1000;
+      const targetYear = celebrating ? currentYear : currentYear + 1;
+      if (targetYear !== lastDisplayYear) {
+        title.textContent = `${targetYear - 1} → ${targetYear}`;
+        date.textContent = `1. Januar ${targetYear}`;
+        footerYear.textContent = currentYear;
+        lastDisplayYear = targetYear;
+      }
+      if (celebrating) {
+        ['days','hours','minutes','seconds'].forEach(id => elements[id].textContent = id === 'days' ? '000' : '00');
+        title.textContent = `HALLO ${targetYear}!`;
+        description.innerHTML = '🎉 Frohes neues Jahr, Verdano City!<br>Auf viele neue gemeinsame Momente.';
+        if (!celebrationLaunched) { celebrationLaunched = true; startShow(12000); }
+      } else {
+        const delta = Math.max(0, Math.floor((newYearTimestamp(targetYear) - now) / 1000));
+        const days = Math.floor(delta / 86400);
+        const hours = Math.floor(delta / 3600) % 24;
+        const minutes = Math.floor(delta / 60) % 60;
+        const seconds = delta % 60;
+        elements.days.textContent = String(days).padStart(3, '0');
+        elements.hours.textContent = String(hours).padStart(2, '0');
+        elements.minutes.textContent = String(minutes).padStart(2, '0');
+        elements.seconds.textContent = String(seconds).padStart(2, '0');
+        description.innerHTML = 'Eine Stadt. Ein Moment. Tausend Erinnerungen.<br>Verdano City zählt gemeinsam die Sekunden bis zum neuen Jahr.';
+        celebrationLaunched = false;
+      }
+    }
+    updateCountdown();
+    setInterval(updateCountdown, 250);
+
+    // Leichtes Canvas-Feuerwerk, funktioniert ohne Bibliotheken oder externe Dienste.
+    const canvas = document.getElementById('fireworks');
+    const ctx = canvas.getContext('2d');
+    let width = 0, height = 0, dpr = 1;
+    let particles = [], animating = false, showUntil = 0, lastBurst = 0;
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+    function resize() {
+      dpr = Math.min(window.devicePixelRatio || 1, 2);
+      width = window.innerWidth; height = window.innerHeight;
+      canvas.width = Math.round(width * dpr);
+      canvas.height = Math.round(height * dpr);
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    }
+    window.addEventListener('resize', resize, { passive:true });
+    resize();
+    function burst() {
+      const x = width * (.15 + Math.random() * .7);
+      const y = height * (.12 + Math.random() * .44);
+      const hue = [151, 174, 199, 45, 320][Math.floor(Math.random() * 5)];
+      const count = reducedMotion.matches ? 24 : 74;
+      for (let i = 0; i < count; i++) {
+        const angle = Math.PI * 2 * i / count;
+        const speed = 1 + Math.random() * 3.6;
+        particles.push({x,y,vx:Math.cos(angle)*speed,vy:Math.sin(angle)*speed,life:1,decay:.010+Math.random()*.013,hue,size:1+Math.random()*2});
+      }
+    }
+    function draw(t) {
+      ctx.clearRect(0, 0, width, height);
+      if (t < showUntil && t - lastBurst > (reducedMotion.matches ? 1100 : 380)) { burst(); lastBurst = t; }
+      particles = particles.filter(p => p.life > 0);
+      for (const p of particles) {
+        p.x += p.vx; p.y += p.vy; p.vy += .035; p.vx *= .993; p.life -= p.decay;
+        ctx.globalAlpha = Math.max(0, p.life);
+        ctx.fillStyle = `hsl(${p.hue} 95% 70%)`;
+        ctx.beginPath(); ctx.arc(p.x, p.y, p.size, 0, Math.PI*2); ctx.fill();
+      }
+      ctx.globalAlpha = 1;
+      if (t < showUntil || particles.length) { requestAnimationFrame(draw); }
+      else { animating = false; ctx.clearRect(0,0,width,height); }
+    }
+    function startShow(duration = 5500) {
+      const now = performance.now();
+      showUntil = Math.max(showUntil, now + duration);
+      if (!animating) { animating = true; lastBurst = 0; requestAnimationFrame(draw); }
+    }
+    document.getElementById('test-fireworks').addEventListener('click', () => startShow());
+  </script>
+</body>
+</html>
