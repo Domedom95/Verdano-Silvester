@@ -1,283 +1,217 @@
 <!DOCTYPE html>
-<!-- Verdano City Silvester – rote TV-Version. Einzelne index.html fuer GitHub Pages. -->
 <html lang="de">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#08090f">
-  <meta name="description" content="Verdano City – der Silvester-Countdown für unsere Community. Gemeinsam zählen wir bis Mitternacht.">
-  <title>Verdano City | Silvester Countdown</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#080809">
+  <meta name="description" content="Verdano City Silvester 2026 / 2027 – live bis Mitternacht. Ein Moment. Eine City.">
+  <title>VERDANO CITY — Silvester 2026 / 2027</title>
   <style>
-    :root {
-      color-scheme: dark;
-      --bg: #08090f;
-      --red: #ff3e57;
-      --red-soft: #ff8e97;
-      --text: #fff5f6;
-      --muted: #c6b6bc;
+    :root { color-scheme:dark; --ink:#08090b; --red:#fa344d; --red-light:#ff6375; --white:#f4f3f2; --muted:#9c9b9f; --hair:rgba(255,255,255,.13); --gutter:clamp(22px,4.9vw,92px); }
+    *,*::before,*::after { box-sizing:border-box; }
+    html,body { width:100%;height:100%;margin:0;overflow:hidden; }
+    body { background:var(--ink);color:var(--white);font-family:Inter,"Segoe UI",Arial,system-ui,sans-serif;-webkit-font-smoothing:antialiased; }
+    button,a { -webkit-tap-highlight-color:transparent; }
+    #fireworks { position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:20; }
+    .app { position:relative;height:100vh;height:100dvh;min-height:0;width:100%;overflow:hidden;display:flex;flex-direction:column;isolation:isolate;background:radial-gradient(ellipse 49% 68% at 84% 43%,#210c12 0%,#110a0e 40%,transparent 90%),#08090b; }
+    /* Editorial stage: vector-only atmosphere, no city artwork or external assets. */
+    .app::before { content:"";position:absolute;inset:0;z-index:-2;pointer-events:none;opacity:.35;background-image:linear-gradient(to right,rgba(255,255,255,.025) 1px,transparent 1px),linear-gradient(to bottom,rgba(255,255,255,.023) 1px,transparent 1px);background-size:74px 74px;mask-image:linear-gradient(to left,#000,transparent 78%); }
+    .app::after { content:"";position:absolute;z-index:-1;top:-35%;right:-27%;width:83vw;height:145vh;transform:rotate(-16deg);pointer-events:none;background:linear-gradient(90deg,transparent 34%,rgba(226,28,57,.025) 43%,rgba(247,49,75,.08) 46%,rgba(239,41,69,.035) 49%,transparent 62%);filter:blur(12px); }
+    .ambient { position:absolute;right:-10vw;top:4%;width:min(65vw,900px);height:95%;z-index:-1;pointer-events:none;opacity:.88; }
+    .ambient svg { width:100%;height:100%;overflow:visible; }
+    .grain {position:absolute;inset:0;pointer-events:none;z-index:4;opacity:.075;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 160 160' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");}
+    .top-line {position:absolute;top:0;left:0;width:100%;height:3px;background:linear-gradient(90deg,var(--red) 0%,#ae162e 17%,transparent 45%);}
+    .shell {width:100%;max-width:1780px;margin:0 auto;padding-inline:var(--gutter);}
+    .header {position:relative;z-index:3;display:flex;align-items:center;justify-content:space-between;gap:12px;flex:0 0 auto;padding-top:clamp(14px,3vh,32px);padding-bottom:clamp(12px,2.5vh,24px);border-bottom:1px solid var(--hair);}
+    .brand {display:flex;gap:clamp(9px,1vw,15px);align-items:center;text-decoration:none;color:inherit;min-width:0;}
+    .brand-symbol {display:grid;place-items:center;flex:0 0 auto;width:clamp(35px,3.7vw,47px);height:clamp(35px,3.7vw,47px);border-radius:7px;background:var(--red);box-shadow:0 0 42px rgba(255,53,76,.18);}
+    .brand-symbol svg{width:62%;height:62%;}
+    .brand-title {font-weight:900;font-size:clamp(13px,1.3vw,18px);letter-spacing:.075em;white-space:nowrap;line-height:1.1;}
+    .brand-sub {margin-top:4px;color:#a8a6a8;font-size:clamp(8px,.76vw,10px);letter-spacing:.23em;font-weight:700;white-space:nowrap;}
+    .live {display:flex;gap:10px;align-items:center;color:#e4dfe0;font-size:clamp(9px,.78vw,11px);letter-spacing:.16em;font-weight:800;white-space:nowrap;}
+    .live-pulse {display:inline-block;width:7px;height:7px;flex:0 0 auto;background:var(--red);border-radius:50%;box-shadow:0 0 0 5px rgba(250,52,77,.12),0 0 20px rgba(250,52,77,.8);animation:breathe 2.2s ease-in-out infinite;}
+    .live strong {font-weight:900;color:var(--red-light);}
+    .hero {flex:1 1 auto;min-height:0;display:flex;align-items:center;position:relative;z-index:2;}
+    .hero-inner {width:100%;padding-block:clamp(12px,2.5vh,36px);}
+    .eyebrow {display:flex;align-items:center;gap:11px;color:#a9a7ab;font-weight:800;letter-spacing:.26em;font-size:clamp(9px,.78vw,12px);white-space:nowrap;}
+    .eyebrow::before {content:"";width:27px;height:2px;flex:0 0 27px;background:var(--red);box-shadow:0 0 14px rgba(250,52,77,.5);}
+    .headline {font-family:"Arial Black","Segoe UI",system-ui,sans-serif;letter-spacing:-.087em;font-size:clamp(52px,10.45vw,186px);font-weight:1000;line-height:.94;margin:clamp(12px,2vh,26px) 0 clamp(8px,2.15vh,22px);white-space:nowrap;text-transform:uppercase;}
+    .headline .period {color:var(--red);margin-left:.017em;text-shadow:0 0 66px rgba(250,52,77,.25);}
+    .hero-bottom {display:flex;align-items:center;flex-wrap:wrap;gap:clamp(14px,3vw,47px);}
+    .year {font-weight:900;letter-spacing:-.045em;font-size:clamp(28px,4.05vw,66px);line-height:1.02;white-space:nowrap;}
+    .year .arrow {display:inline-block;font-size:.68em;font-weight:400;color:var(--red);vertical-align:8%;margin-inline:.17em;}
+    .hero-caption {padding-left:clamp(12px,1.6vw,25px);border-left:1px solid rgba(255,255,255,.27);font-size:clamp(11px,1.04vw,16px);color:#b4b0b2;line-height:1.48;max-width:350px;}
+    .hero-caption b {color:var(--white);font-weight:650;}
+    .count-area {flex:0 0 auto;position:relative;z-index:3;background:linear-gradient(180deg,rgba(14,14,17,.0),rgba(9,9,11,.65));}
+    .count-head {display:flex;align-items:center;justify-content:space-between;gap:12px;border-top:1px solid rgba(255,255,255,.32);padding-top:clamp(12px,1.8vh,20px);padding-bottom:clamp(12px,2vh,23px);font-size:clamp(9px,.8vw,12px);letter-spacing:.18em;font-weight:800;}
+    .count-head .heading {color:#f6e7e8;}
+    .count-head .heading span {color:var(--red);margin-right:9px;}
+    .count-head .zone {color:var(--muted);font-size:clamp(8px,.7vw,10px);letter-spacing:.12em;}
+    .digits {display:grid;grid-template-columns:1.12fr 1fr 1fr 1fr;width:100%;}
+    .digit {position:relative;padding:0 clamp(9px,2.5vw,44px) clamp(10px,2vh,27px);min-width:0;border-left:1px solid rgba(255,255,255,.15);}
+    .digit:first-child {border-left:none;padding-left:0;}
+    .digit:last-child {padding-right:0;}
+    .number {font-family:"Arial Black","Segoe UI",system-ui,sans-serif;font-variant-numeric:tabular-nums;display:block;font-size:clamp(42px,7.25vw,118px);font-weight:900;line-height:1;letter-spacing:-.08em;white-space:nowrap;transition:color .15s;}
+    .digit:last-child .number {color:var(--red-light);}
+    .digit-label {display:flex;justify-content:space-between;align-items:center;gap:6px;padding-top:clamp(8px,1.2vh,17px);font-size:clamp(9px,.8vw,12px);letter-spacing:.22em;color:#858489;font-weight:850;}
+    .digit-label .index {color:#534c52;font-weight:600;letter-spacing:0;}
+    .progress {height:2px;background:rgba(255,255,255,.085);width:100%;overflow:hidden;}
+    .progress-fill {height:100%;width:0%;background:linear-gradient(90deg,#7d1427,var(--red),#ffb0b8);transition:width .9s linear;box-shadow:0 0 14px var(--red);}
+    .footer {flex:0 0 auto;display:flex;justify-content:space-between;align-items:center;gap:12px;padding-top:clamp(11px,2.1vh,23px);padding-bottom:clamp(12px,2.5vh,27px);position:relative;z-index:3;}
+    .foot-left {display:flex;align-items:center;gap:11px;color:#9a969a;font-size:clamp(9px,.82vw,12px);letter-spacing:.14em;font-weight:750;white-space:nowrap;}
+    .foot-left .foot-spark {color:var(--red);font-size:17px;}
+    .foot-left .sep {width:1px;height:13px;background:#4e4247;display:inline-block;}
+    .fire-btn {flex:0 0 auto;border:1px solid rgba(255,88,111,.44);border-radius:4px;background:rgba(247,44,72,.085);color:#f8d9dc;cursor:pointer;font:inherit;font-size:clamp(10px,.85vw,12px);letter-spacing:.07em;font-weight:800;padding:clamp(9px,1.2vh,13px) clamp(12px,1.6vw,23px);transition:background .2s,border-color .2s,transform .2s;white-space:nowrap;}
+    .fire-btn:hover {background:rgba(250,52,77,.22);border-color:var(--red);transform:translateY(-1px);}
+    .fire-btn:focus-visible {outline:2px solid white;outline-offset:3px;}
+    .celebration {display:none;position:absolute;inset:0;z-index:10;pointer-events:none;align-items:center;justify-content:center;text-align:center;background:radial-gradient(ellipse at 50% 42%,rgba(87,10,29,.89),rgba(9,9,11,.91) 75%);}
+    .celebration.active {display:flex;}
+    .celebration-content {padding:20px;}
+    .celebration .small {font-weight:850;letter-spacing:.24em;color:#ffc7ce;font-size:clamp(11px,1.25vw,17px);}
+    .celebration .big {font-weight:1000;letter-spacing:-.07em;line-height:.94;font-size:clamp(46px,8.4vw,156px);margin:22px 0 10px;}
+    .celebration .big span{color:var(--red);}
+    .celebration .wish{font-size:clamp(14px,1.6vw,23px);color:#ded3d6;}
+    @keyframes breathe{0%,100%{opacity:1;}50%{opacity:.45;}}
+    @media(max-height:750px) { .header {padding-block:10px;} .hero-inner {padding-block:8px;} .headline {margin-block:9px;} .count-head {padding-block:10px 12px;} .digit {padding-bottom:10px;} .digit-label{padding-top:6px;} .footer {padding-block:9px;} }
+    @media(max-height:530px) and (min-width:551px) { .header{padding-block:6px;} .brand-symbol{width:30px;height:30px;} .brand-sub{display:none;} .headline{font-size:min(10.45vw,19vh);margin:6px 0;} .hero-inner{padding:6px 0;} .hero-caption{font-size:10px;} .eyebrow{font-size:9px;} .year{font-size:min(4vw,9vh);} .number{font-size:min(7vw,15vh);} .count-head{padding-block:6px 8px;} .digit{padding-bottom:7px;} .digit-label{padding-top:5px;} .footer{padding-block:7px;} .fire-btn{padding:6px 10px;} }
+    @media(max-height:335px) and (min-width:551px){.hero-caption,.eyebrow,.count-head .zone,.digit-label .index{display:none;} .headline{font-size:min(10vw,19vh);} .year{font-size:6vh;} .number{font-size:12vh;} .digit-label{font-size:8px;} .footer{padding:5px 0;} .brand-symbol{width:24px;height:24px;} .brand-title{font-size:10px;} .live{font-size:9px;} }
+    @media(max-width:750px) { :root{--gutter:clamp(17px,4vw,30px);} .header{padding-top:16px;} .brand-title{font-size:12px;}.brand-sub{font-size:8px;letter-spacing:.11em;} .live{font-size:8px;letter-spacing:.05em;} .ambient{right:-48vw;top:20%;width:125vw;height:65%;opacity:.6;} .headline{font-size:11.1vw;} .year{font-size:6vw;} .hero-caption{font-size:11px;max-width:220px;} .digits{grid-template-columns:repeat(4,minmax(0,1fr));} .digit{padding-inline:11px;} .number{font-size:8.7vw;} .digit-label{font-size:8px;letter-spacing:.08em;} .digit-label .index{display:none;} .foot-left{font-size:9px;letter-spacing:.04em;} }
+    @media(max-width:550px) { .header{padding-block:15px;} .brand-symbol{width:34px;height:34px;} .brand-title{font-size:12px;} .brand-sub{display:none;} .live strong{display:none;} .hero{align-items:center;} .hero-inner{padding-block:10px;} .eyebrow{font-size:9px;letter-spacing:.14em;} .headline{font-size:11.65vw;letter-spacing:-.085em;margin:19px 0;} .hero-bottom{gap:18px;align-items:flex-start;flex-direction:column;} .year{font-size:clamp(30px,10vw,45px);} .hero-caption{font-size:12px;} .count-head{padding-block:12px;} .count-head .zone{display:none;} .digits{grid-template-columns:repeat(2,minmax(0,1fr));row-gap:8px;} .digit{border-left:none;border-top:1px solid rgba(255,255,255,.13);padding:9px 0 8px;} .digit:nth-child(even){padding-left:15px;border-left:1px solid rgba(255,255,255,.13);} .digit:nth-child(-n+2){border-top:none;} .number{font-size:clamp(48px,16vw,74px);} .digit-label{font-size:10px;letter-spacing:.12em;padding-top:3px;} .footer{flex-wrap:wrap;padding-block:12px;} .foot-left{font-size:9px;} .fire-btn{font-size:10px;padding:9px 12px;} }
+    @media(max-width:550px) and (max-height:660px){.hero-caption{display:none;} .headline{margin-block:12px;} .hero-bottom{gap:10px;} .digit{padding-block:5px;} .number{font-size:12vw;} .footer{padding-block:7px;} }
+    @media(max-width:550px) and (max-height:380px) {
+      .header { padding-block:4px; }
+      .brand-symbol {width:23px;height:23px;border-radius:4px;}
+      .brand-title {font-size:10px;}
+      .live {font-size:8px;}
+      .hero-inner {padding:0;}
+      .eyebrow {display:none;}
+      .headline {font-size:10.5vw;margin:0 0 4px;}
+      .hero-bottom {gap:0;}
+      .year {font-size:6vw;}
+      .hero-caption {display:none;}
+      .count-head {padding-block:5px;font-size:8px;}
+      .digits {grid-template-columns:repeat(4,minmax(0,1fr));gap:0;}
+      .digit,.digit:nth-child(-n+2) {border-top:0;padding:3px 6px 5px;}
+      .digit:first-child {border-left:0;padding-left:0;}
+      .digit:nth-child(3) {border-left:1px solid rgba(255,255,255,.13);}
+      .number {font-size:9vw;}
+      .digit-label {font-size:7px;}
+      .footer {padding-block:5px;flex-wrap:nowrap;}
+      .foot-left .sep,.foot-left .sep + span {display:none;}
+      .fire-btn {padding:6px 8px;font-size:8px;}
     }
-    *, *::before, *::after { box-sizing: border-box; }
-    html, body { width: 100%; height: 100%; margin: 0; overflow: hidden; }
-    body {
-      min-width: 320px;
-      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      background: #08090f;
-      color: var(--text);
-      -webkit-font-smoothing: antialiased;
-    }
-    body::before {
-      content: "";
-      position: fixed;
-      inset: 0;
-      pointer-events: none;
-      background:
-        radial-gradient(ellipse 44% 38% at 50% 29%, rgba(160, 24, 49, .27), transparent 78%),
-        radial-gradient(ellipse 32% 52% at 80% 43%, rgba(110, 23, 52, .12), transparent 85%),
-        linear-gradient(180deg, #0a0c15 0%, #100b13 55%, #0b0e15 100%);
-    }
-    .grain {
-      position: fixed; inset: 0; pointer-events: none; z-index: 1; opacity: .10;
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.84' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.26'/%3E%3C/svg%3E");
-    }
-    #fireworks { position: fixed; inset: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: 6; }
-    .site {
-      height: 100vh; height: 100dvh;
-      min-height: 0; width: 100%;
-      display: flex; flex-direction: column;
-      position: relative; isolation: isolate;
-      overflow: hidden;
-    }
-    .site::before {
-      content: ""; position: absolute; z-index: -1;
-      width: min(54vw, 720px); height: min(40vh, 370px); left: 50%; top: 20%;
-      transform: translateX(-50%); border-radius: 50%;
-      background: rgba(225, 31, 62, .13); filter: blur(76px); pointer-events: none;
-    }
-    header {
-      width: min(1220px, 91%); margin: 0 auto;
-      padding: clamp(12px, 2.4vh, 25px) 0;
-      display: flex; flex: 0 0 auto;
-      justify-content: space-between; align-items: center; gap: 14px;
-      position: relative; z-index: 2;
-    }
-    .brand { display: flex; align-items: center; gap: 11px; color: #fff; text-decoration: none; font-size: clamp(11px, 1.1vw, 15px); font-weight: 850; letter-spacing: .16em; }
-    .logo { width: clamp(32px, 4.3vh, 43px); height: clamp(32px, 4.3vh, 43px); flex: 0 0 auto; display: grid; place-items: center; border: 1px solid rgba(255, 99, 116, .52); border-radius: 12px; transform: rotate(-8deg); background: linear-gradient(145deg, rgba(243,48,78,.20), rgba(81,17,32,.18)); box-shadow: 0 0 32px rgba(244, 46, 78, .13); }
-    .logo svg { width: 70%; height: 70%; transform: rotate(8deg); }
-    .status { font-size: clamp(9px, .8vw, 11px); color: #ffb9c2; border: 1px solid rgba(255, 99, 116, .25); border-radius: 99px; padding: clamp(7px, 1.1vh, 10px) 14px; display: flex; gap: 9px; align-items: center; letter-spacing: .12em; font-weight: 750; background: rgba(61, 16, 32, .49); white-space: nowrap; }
-    .status-dot { width: 7px; height: 7px; flex:0 0 7px; background: #ff556c; border-radius: 50%; box-shadow: 0 0 12px #ff556c; animation: pulse 2s infinite; }
-    main {
-      width: min(1100px, 91%); margin: 0 auto;
-      flex: 1 1 auto; min-height: 0;
-      display: flex; flex-direction: column; align-items: center; justify-content: center;
-      text-align: center;
-      padding: clamp(6px, 1.4vh, 16px) 0 clamp(48px, 10.2vh, 100px);
-      position: relative; z-index: 2;
-    }
-    .eyebrow { display: inline-flex; gap: 9px; align-items: center; padding: clamp(6px, .95vh, 9px) 15px; border: 1px solid rgba(255, 100, 120, .32); background: rgba(100, 18, 37, .26); border-radius: 999px; color: #ffb4bf; font-size: clamp(9px, .83vw, 11px); font-weight: 750; letter-spacing: .21em; text-transform: uppercase; white-space: nowrap; }
-    .eyebrow span { font-size: 13px; }
-    h1 { margin: clamp(9px, 1.7vh, 17px) 0 0; font-size: clamp(50px, min(9.3vw, 13.5vh), 124px); letter-spacing: -.085em; line-height: .97; font-weight: 900; text-shadow: 0 12px 38px rgba(0,0,0,.3); }
-    h1 em { font-style: normal; background: linear-gradient(120deg, #fff2f3 6%, #ff9aa5 42%, #fb3653 93%); -webkit-background-clip: text; background-clip: text; color: transparent; }
-    .headline-small { display: block; font-size: clamp(26px, min(4vw, 6.2vh), 54px); margin-top: clamp(5px, 1vh, 10px); letter-spacing: -.035em; font-weight: 850; color: #fff8f8; }
-    .subtitle { color: var(--muted); font-size: clamp(11px, min(1.24vw, 2vh), 16px); margin: clamp(10px, 1.7vh, 18px) auto 0; max-width: 670px; line-height: 1.5; }
-    .countdown { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: clamp(8px, 1.3vw, 16px); margin: clamp(17px, 3.0vh, 32px) auto 0; width: min(870px, 100%); }
-    .time-card { position: relative; overflow: hidden; min-width: 0; padding: clamp(12px, 2vh, 23px) 7px clamp(10px, 1.7vh, 19px); background: linear-gradient(155deg, rgba(75, 29, 44, .68), rgba(21, 14, 25, .85)); border: 1px solid rgba(255, 110, 129, .27); border-radius: clamp(12px, 1.5vw, 19px); box-shadow: 0 16px 44px rgba(0,0,0,.22), inset 0 1px rgba(255,255,255,.055); backdrop-filter: blur(9px); }
-    .time-card::before { content: ""; height: 2px; width: 72%; position: absolute; top: 0; left: 14%; background: linear-gradient(90deg, transparent, rgba(255,95,119,.79), transparent); }
-    .time-value { display: block; font-size: clamp(38px, min(6.4vw, 10vh), 78px); line-height: 1.08; font-weight: 850; letter-spacing: -.06em; font-variant-numeric: tabular-nums; color: #fffaf9; }
-    .time-label { display: block; margin-top: clamp(4px, 1vh, 9px); color: #e3a1ad; font-size: clamp(9px, .85vw, 12px); letter-spacing: .18em; font-weight: 800; }
-    .date-line { display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 9px; color: #eee0e3; font-size: clamp(11px, 1vw, 13px); font-weight: 550; margin-top: clamp(12px, 2.3vh, 23px); }
-    .date-line svg { color: var(--red-soft); }
-    .date-line b { font-weight: 500; color: #8f5564; }
-    .cta { margin-top: clamp(11px, 1.9vh, 19px); border: 1px solid rgba(255, 107, 127, .44); border-radius: 999px; background: rgba(228, 40, 74, .15); padding: clamp(9px, 1.2vh, 12px) 20px; color: #ffd4db; font: inherit; font-size: clamp(11px, .95vw, 13px); cursor: pointer; transition: background .2s, transform .2s; }
-    .cta:hover { background: rgba(228, 40, 74, .27); transform: translateY(-2px); }
-    .cta:focus-visible { outline: 2px solid var(--red); outline-offset: 4px; }
-    .skyline { position: absolute; bottom: 0; left: 0; width: 100%; z-index: -1; height: clamp(90px, 19vh, 190px); overflow: hidden; pointer-events: none; }
-    .skyline svg { display: block; width: 100%; height: 100%; overflow: hidden; }
-    .skyline::after { content: ""; position: absolute; inset: auto 0 0; height: 22px; background: linear-gradient(0deg, #08090e, transparent); }
-    footer { flex: 0 0 auto; position: relative; z-index: 2; text-align: center; border-top: 1px solid rgba(255, 115, 127, .1); padding: clamp(8px, 1.4vh, 13px); color: #a78690; font-size: clamp(9px, .75vw, 11px); letter-spacing: .12em; background: rgba(8, 9, 15, .88); }
-    @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: .35; } }
-    @media (max-height: 700px) {
-      header { padding: 9px 0; }
-      main { padding-top: 4px; padding-bottom: 30px; }
-      h1 { margin-top: 7px; }
-      .subtitle { margin-top: 8px; }
-      .countdown { margin-top: 12px; }
-      .date-line { margin-top: 10px; }
-      .cta { margin-top: 9px; }
-      .skyline { height: 95px; }
-    }
-    @media (max-height: 500px) and (min-width: 520px) {
-      .subtitle, .cta { display: none; }
-      .eyebrow { padding: 5px 12px; }
-      .time-card { padding: 7px; }
-      h1 { font-size: min(9.3vw, 15vh); }
-      main { padding-bottom: 14px; }
-      .skyline { height: 60px; }
-    }
-    @media (max-height: 330px) {
-      .eyebrow, .subtitle, .cta, .date-line, footer { display: none; }
-      header { padding: 4px 0; }
-      main { padding: 0; }
-      h1 { margin-top: 0; font-size: clamp(30px, 12vh, 60px); }
-      .headline-small { font-size: clamp(19px, 7vh, 30px); }
-      .countdown { margin-top: 9px; }
-      .time-card { padding: 5px 3px; }
-      .time-value { font-size: clamp(24px, 10vh, 48px); }
-      .time-label { margin-top: 1px; }
-      .skyline { height: 35px; }
-    }
-    @media (max-width: 650px) {
-      header { width: 94%; }
-      .brand { letter-spacing: .06em; font-size: 10px; gap: 6px; }
-      .status { padding: 7px 9px; font-size: 9px; letter-spacing: .02em; }
-      main { width: 96%; padding-bottom: clamp(28px, 8vh, 62px); }
-      h1 { font-size: clamp(40px, 10vw, 76px); }
-      .headline-small { font-size: clamp(23px, 6vw, 42px); }
-      .countdown { width: 100%; gap: 6px; }
-      .time-card { border-radius: 11px; padding: 15px 3px; }
-      .time-value { font-size: clamp(29px, 8.1vw, 57px); }
-      .time-label { font-size: 8px; letter-spacing: .035em; }
-      .eyebrow { letter-spacing: .09em; }
-      .subtitle { padding: 0 8px; }
-      .date-line { font-size: 10px; gap: 6px; }
-      footer { letter-spacing: .035em; }
-    }
-    @media (max-width: 380px) { .brand { font-size: 9px; } .status { font-size: 8px; } h1 { font-size: 40px; } }
-    @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: .001ms !important; transition-duration: .001ms !important; } }
+    @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.001ms!important;transition-duration:.001ms!important;}}
   </style>
 </head>
 <body>
-  <canvas id="fireworks" aria-hidden="true"></canvas>
-  <div class="grain" aria-hidden="true"></div>
-  <div class="site">
-    <header>
-      <a class="brand" href="#start" aria-label="Verdano City – zur Startseite">
-        <span class="logo"><svg viewBox="0 0 36 36" fill="none" aria-hidden="true"><path d="M4 7L17 29H21L33 7H24L19 19L13 7H4Z" fill="#FF5A71"/><path d="M24 7L19 19" stroke="#FFE3E7" stroke-width="1.5"/></svg></span>
-        <span>VERDANO CITY</span>
-      </a>
-      <div class="status"><span class="status-dot"></span><span>LIVE COUNTDOWN</span></div>
-    </header>
-    <main id="start">
-      <div class="eyebrow"><span aria-hidden="true">✦</span> DIE LETZTE NACHT DES JAHRES <span aria-hidden="true">✦</span></div>
-      <h1><em>SILVESTER</em><span class="headline-small" id="year-title">2026 → 2027</span></h1>
-      <p class="subtitle" id="description">Eine Stadt. Ein Moment. Tausend Erinnerungen.<br>Verdano City zählt gemeinsam die Sekunden bis zum neuen Jahr.</p>
-      <section class="countdown" aria-label="Countdown bis Neujahr" role="timer" aria-live="off">
-        <div class="time-card"><span class="time-value" id="days">000</span><span class="time-label">TAGE</span></div>
-        <div class="time-card"><span class="time-value" id="hours">00</span><span class="time-label">STUNDEN</span></div>
-        <div class="time-card"><span class="time-value" id="minutes">00</span><span class="time-label">MINUTEN</span></div>
-        <div class="time-card"><span class="time-value" id="seconds">00</span><span class="time-label">SEKUNDEN</span></div>
-      </section>
-      <div class="date-line"><svg width="17" height="17" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8" fill="none" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M7 3v4M17 3v4M3 10h18"/></svg><span id="date-label">1. Januar 2027</span><b>•</b><span>00:00 Uhr (Berlin / MEZ)</span></div>
-      <button class="cta" id="test-fireworks" type="button">✧ Feuerwerk ansehen</button>
-    </main>
-    <div class="skyline" aria-hidden="true">
-      <svg preserveAspectRatio="none" viewBox="0 0 1440 260" xmlns="http://www.w3.org/2000/svg">
-        <defs>
-          <linearGradient id="city" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#38202d"/><stop offset="1" stop-color="#0d0b13"/></linearGradient>
-          <pattern id="windows" x="0" y="0" width="25" height="22" patternUnits="userSpaceOnUse"><rect x="7" y="7" width="5" height="7" rx="1" fill="#ff607a" opacity=".33"/><rect x="19" y="7" width="4" height="7" rx="1" fill="#bc5a75" opacity=".17"/></pattern>
-        </defs>
-        <path fill="#311b29" opacity=".6" d="M0 124h76V98h85v47h50V80h48v25h77V75h67v68h84V89h95v26h60V55h72v48h78V72h78v58h68V86h83v40h69V100h79v-20h80v34h68V89h70v46h80v125H0z"/>
-        <path fill="url(#city)" d="M0 165h50v-32h51v30h48V96h78v34h43v45h47V119h58v49h34V90h85v72h42v-41h62V73h36V51h10V24h5v27h10v22h35v93h52v-43h49v37h49V94h85v69h46v-59h54v58h57v-45h91v55h46V76h61v-28h4v28h39v100h48V130h72v35h50V92h70v83h57v-46h72v131H0z"/>
-        <path fill="url(#windows)" opacity=".52" d="M0 165h50v-32h51v30h48V96h78v34h43v45h47V119h58v49h34V90h85v72h42v-41h62V73h36V51h10V24h5v27h10v22h35v93h52v-43h49v37h49V94h85v69h46v-59h54v58h57v-45h91v55h46V76h61v-28h4v28h39v100h48V130h72v35h50V92h70v83h57v-46h72v131H0z"/>
-        <path fill="#0b0b14" d="M0 205h160v-25h104v34h152v-29h146v30h108v-17h139v23h144v-31h160v23h105v-19h122v66H0z"/>
-      </svg>
-    </div>
-    <footer>© <span id="footer-year">2026</span> VERDANO CITY <span aria-hidden="true">·</span> GEMEINSAM INS NEUE JAHR</footer>
+<canvas id="fireworks" aria-hidden="true"></canvas>
+<div class="app">
+  <div class="top-line" aria-hidden="true"></div>
+  <div class="ambient" aria-hidden="true">
+    <svg viewBox="0 0 800 800" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <defs><linearGradient id="orbit" x1="100" y1="100" x2="720" y2="690"><stop stop-color="#FA344D" stop-opacity=".42"/><stop offset=".46" stop-color="#FA344D" stop-opacity=".06"/><stop offset="1" stop-color="#FA344D" stop-opacity=".27"/></linearGradient><radialGradient id="halo"><stop stop-color="#C42645" stop-opacity=".18"/><stop offset="1" stop-color="#F02C4C" stop-opacity="0"/></radialGradient></defs>
+      <circle cx="425" cy="390" r="360" fill="url(#halo)"/>
+      <circle cx="425" cy="390" r="304" stroke="url(#orbit)" stroke-width="1.1"/>
+      <circle cx="425" cy="390" r="249" stroke="#FF4564" stroke-opacity=".13" stroke-width="1" stroke-dasharray="2 12"/>
+      <circle cx="425" cy="390" r="200" stroke="#FF4564" stroke-opacity=".11" stroke-width="1"/>
+      <path d="M243 146A304 304 0 0 1 713 485" stroke="#FA344D" stroke-opacity=".52" stroke-width="3" stroke-linecap="round"/>
+      <path d="M616 624A304 304 0 0 1 188 581" stroke="#FA344D" stroke-opacity=".20" stroke-width="2" stroke-linecap="round"/>
+      <circle cx="243" cy="146" r="5" fill="#FA344D"/><circle cx="713" cy="485" r="3" fill="#F97384"/>
+      <path d="M90 390H765M425 45V732" stroke="#F7F4F4" stroke-opacity=".035"/>
+    </svg>
   </div>
-  <script>
-    // Alle Besucher zählen zur gleichen Mitternacht in der Zeitzone Europe/Berlin.
-    const formatter = new Intl.DateTimeFormat('en-US', { timeZone: 'Europe/Berlin', year: 'numeric' });
-    const berlinYear = () => Number(formatter.format(new Date()));
-    // Der 1. Januar um 00:00 Uhr in Berlin entspricht am 31. Dezember um 23:00 UTC.
-    const newYearTimestamp = (year) => Date.UTC(year - 1, 11, 31, 23, 0, 0);
-    const elements = Object.fromEntries(['days','hours','minutes','seconds'].map(id => [id, document.getElementById(id)]));
-    const title = document.getElementById('year-title');
-    const date = document.getElementById('date-label');
-    const description = document.getElementById('description');
-    const footerYear = document.getElementById('footer-year');
-    let celebrationLaunched = false;
-    let lastDisplayYear = null;
+  <div class="grain" aria-hidden="true"></div>
+  <header class="header shell">
+    <a class="brand" href="#top" aria-label="Verdano City">
+      <span class="brand-symbol" aria-hidden="true"><svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3 5H10.9L16.1 18.5L21.4 5H29L18.1 27H13.7L3 5Z" fill="white"/></svg></span>
+      <span><span class="brand-title" style="display:block">VERDANO CITY</span><span class="brand-sub" style="display:block">NEW YEAR'S EVE · 2026/27</span></span>
+    </a>
+    <div class="live"><span class="live-pulse"></span><strong>LIVE</strong><span>COUNTDOWN ZUR MITTERNACHT</span></div>
+  </header>
+  <main class="hero shell" id="top">
+    <div class="hero-inner">
+      <div class="eyebrow">DIE LETZTE NACHT DES JAHRES</div>
+      <h1 class="headline">SILVESTER<span class="period">.</span></h1>
+      <div class="hero-bottom">
+        <div class="year"><span id="from-year">2026</span><span class="arrow">→</span><span id="to-year">2027</span></div>
+        <div class="hero-caption"><b>Eine City. Eine Nacht. Ein Moment.</b><br>Wir zählen gemeinsam ins neue Jahr.</div>
+      </div>
+    </div>
+  </main>
+  <section class="count-area shell" aria-label="Countdown bis zum Neujahr in Berlin">
+    <div class="count-head"><span class="heading"><span>●</span> DIE ZEIT LÄUFT</span><span class="zone" id="target-date">01. JANUAR 2027 · 00:00 UHR · BERLIN / MEZ</span></div>
+    <div class="digits" role="timer" aria-live="off">
+      <div class="digit"><span id="days" class="number">000</span><span class="digit-label">TAGE <span class="index">01 / 04</span></span></div>
+      <div class="digit"><span id="hours" class="number">00</span><span class="digit-label">STUNDEN <span class="index">02 / 04</span></span></div>
+      <div class="digit"><span id="minutes" class="number">00</span><span class="digit-label">MINUTEN <span class="index">03 / 04</span></span></div>
+      <div class="digit"><span id="seconds" class="number">00</span><span class="digit-label">SEKUNDEN <span class="index">04 / 04</span></span></div>
+    </div>
+    <div class="progress" aria-hidden="true"><div class="progress-fill" id="progress-fill"></div></div>
+  </section>
+  <footer class="footer shell"><div class="foot-left"><span class="foot-spark">✳</span><span>VERDANO CITY</span><span class="sep"></span><span>GEMEINSAM INS NEUE JAHR</span></div><button id="fireworks-btn" class="fire-btn" type="button">✧ FEUERWERK ANSEHEN</button></footer>
+  <div class="celebration" id="celebration" aria-live="polite"><div class="celebration-content"><div class="small">VERDANO CITY WÜNSCHT EUCH</div><div class="big">FROHES<br><span>NEUES!</span></div><div class="wish">Willkommen in <span id="celebrate-year">2027</span>. Auf ein unvergessliches Jahr.</div></div></div>
+</div>
+<script>
+(() => {
+  'use strict';
+  // Europe/Berlin wird bewusst verwendet – damit alle denselben Jahreswechsel sehen.
+  // Mitternacht am 1. Januar in Berlin = 23:00 UTC am 31. Dezember.
+  const berlinYear = () => Number(new Intl.DateTimeFormat('en', { timeZone:'Europe/Berlin', year:'numeric' }).format(new Date()));
+  const midnight = year => Date.UTC(year - 1, 11, 31, 23, 0, 0);
+  const $ = id => document.getElementById(id);
+  const timers = { days:$('days'), hours:$('hours'), minutes:$('minutes'), seconds:$('seconds') };
+  let lastYear = -1;
+  let launched = false;
+  function tick() {
+    const now = Date.now();
+    const year = berlinYear();
+    const newYear = midnight(year);
+    const celebrate = now >= newYear && now < newYear + 10 * 60 * 1000;
+    const targetYear = celebrate ? year : year + 1;
+    if (targetYear !== lastYear) {
+      $('from-year').textContent = String(targetYear - 1);
+      $('to-year').textContent = String(targetYear);
+      $('target-date').textContent = `01. JANUAR ${targetYear} · 00:00 UHR · BERLIN / MEZ`;
+      $('celebrate-year').textContent = String(targetYear);
+      lastYear = targetYear;
+    }
+    const seconds = celebrate ? 0 : Math.max(0,Math.floor((midnight(targetYear) - now) / 1000));
+    timers.days.textContent = String(Math.floor(seconds / 86400)).padStart(3,'0');
+    timers.hours.textContent = String(Math.floor(seconds / 3600) % 24).padStart(2,'0');
+    timers.minutes.textContent = String(Math.floor(seconds / 60) % 60).padStart(2,'0');
+    timers.seconds.textContent = String(seconds % 60).padStart(2,'0');
+    const yearStart = midnight(targetYear - 1);
+    const fraction = (now - yearStart) / (midnight(targetYear) - yearStart);
+    $('progress-fill').style.width = `${Math.max(0,Math.min(100, fraction * 100))}%`;
+    $('celebration').classList.toggle('active', celebrate);
+    if (celebrate && !launched) { launched = true; launch(12000); }
+    if (!celebrate) launched = false;
+  }
 
-    function updateCountdown() {
-      const now = Date.now();
-      const currentYear = berlinYear();
-      const todayNewYear = newYearTimestamp(currentYear);
-      // In den ersten 10 Minuten des neuen Jahres die Gratulation zeigen.
-      const celebrating = now >= todayNewYear && now < todayNewYear + 10 * 60 * 1000;
-      const targetYear = celebrating ? currentYear : currentYear + 1;
-      if (targetYear !== lastDisplayYear) {
-        title.textContent = `${targetYear - 1} → ${targetYear}`;
-        date.textContent = `1. Januar ${targetYear}`;
-        footerYear.textContent = currentYear;
-        lastDisplayYear = targetYear;
-      }
-      if (celebrating) {
-        ['days','hours','minutes','seconds'].forEach(id => elements[id].textContent = id === 'days' ? '000' : '00');
-        title.textContent = `HALLO ${targetYear}!`;
-        description.innerHTML = '🎉 Frohes neues Jahr, Verdano City!<br>Auf viele neue gemeinsame Momente.';
-        if (!celebrationLaunched) { celebrationLaunched = true; startShow(12000); }
-      } else {
-        const delta = Math.max(0, Math.floor((newYearTimestamp(targetYear) - now) / 1000));
-        const days = Math.floor(delta / 86400);
-        const hours = Math.floor(delta / 3600) % 24;
-        const minutes = Math.floor(delta / 60) % 60;
-        const seconds = delta % 60;
-        elements.days.textContent = String(days).padStart(3, '0');
-        elements.hours.textContent = String(hours).padStart(2, '0');
-        elements.minutes.textContent = String(minutes).padStart(2, '0');
-        elements.seconds.textContent = String(seconds).padStart(2, '0');
-        description.innerHTML = 'Eine Stadt. Ein Moment. Tausend Erinnerungen.<br>Verdano City zählt gemeinsam die Sekunden bis zum neuen Jahr.';
-        celebrationLaunched = false;
-      }
-    }
-    updateCountdown();
-    setInterval(updateCountdown, 250);
-
-    // Leichtes Canvas-Feuerwerk, funktioniert ohne Bibliotheken oder externe Dienste.
-    const canvas = document.getElementById('fireworks');
-    const ctx = canvas.getContext('2d');
-    let width = 0, height = 0, dpr = 1;
-    let particles = [], animating = false, showUntil = 0, lastBurst = 0;
-    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
-    function resize() {
-      dpr = Math.min(window.devicePixelRatio || 1, 2);
-      width = window.innerWidth; height = window.innerHeight;
-      canvas.width = Math.round(width * dpr);
-      canvas.height = Math.round(height * dpr);
-      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-    }
-    window.addEventListener('resize', resize, { passive:true });
-    resize();
-    function burst() {
-      const x = width * (.15 + Math.random() * .7);
-      const y = height * (.12 + Math.random() * .44);
-      const hue = [352, 9, 24, 42, 332][Math.floor(Math.random() * 5)];
-      const count = reducedMotion.matches ? 24 : 74;
-      for (let i = 0; i < count; i++) {
-        const angle = Math.PI * 2 * i / count;
-        const speed = 1 + Math.random() * 3.6;
-        particles.push({x,y,vx:Math.cos(angle)*speed,vy:Math.sin(angle)*speed,life:1,decay:.010+Math.random()*.013,hue,size:1+Math.random()*2});
-      }
-    }
-    function draw(t) {
-      ctx.clearRect(0, 0, width, height);
-      if (t < showUntil && t - lastBurst > (reducedMotion.matches ? 1100 : 380)) { burst(); lastBurst = t; }
-      particles = particles.filter(p => p.life > 0);
-      for (const p of particles) {
-        p.x += p.vx; p.y += p.vy; p.vy += .035; p.vx *= .993; p.life -= p.decay;
-        ctx.globalAlpha = Math.max(0, p.life);
-        ctx.fillStyle = `hsl(${p.hue} 95% 70%)`;
-        ctx.beginPath(); ctx.arc(p.x, p.y, p.size, 0, Math.PI*2); ctx.fill();
-      }
-      ctx.globalAlpha = 1;
-      if (t < showUntil || particles.length) { requestAnimationFrame(draw); }
-      else { animating = false; ctx.clearRect(0,0,width,height); }
-    }
-    function startShow(duration = 5500) {
-      const now = performance.now();
-      showUntil = Math.max(showUntil, now + duration);
-      if (!animating) { animating = true; lastBurst = 0; requestAnimationFrame(draw); }
-    }
-    document.getElementById('test-fireworks').addEventListener('click', () => startShow());
-  </script>
+  const canvas = $('fireworks');
+  const ctx = canvas.getContext('2d');
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)');
+  let w=0,h=0,dpr=1,particles=[],running=false,until=0,lastBurst=0;
+  function resize() { w=innerWidth;h=innerHeight;dpr=Math.min(devicePixelRatio||1,2);canvas.width=Math.round(w*dpr);canvas.height=Math.round(h*dpr);ctx.setTransform(dpr,0,0,dpr,0,0); }
+  addEventListener('resize',resize,{passive:true}); resize();
+  function burst() {
+    const x=w*(.17+Math.random()*.66),y=h*(.11+Math.random()*.49);
+    const color=['#ff3654','#fe6d80','#ffc2cd','#ffffff','#ffa45b'][Math.floor(Math.random()*5)];
+    const n=reduce.matches?24:70;
+    for(let i=0;i<n;i++) { const a=i*2*Math.PI/n,s=.7+Math.random()*3.2;particles.push({x,y,vx:Math.cos(a)*s,vy:Math.sin(a)*s,life:1,decay:.009+Math.random()*.016,r:1+Math.random()*1.5,color}); }
+  }
+  function animate(t) {
+    ctx.clearRect(0,0,w,h);
+    if(t<until&&t-lastBurst>(reduce.matches?1100:400)){lastBurst=t;burst();}
+    particles=particles.filter(p=>p.life>0);
+    for(const p of particles){p.x+=p.vx;p.y+=p.vy;p.vy+=.025;p.vx*=.993;p.life-=p.decay;ctx.globalAlpha=Math.max(0,p.life);ctx.fillStyle=p.color;ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);ctx.fill();}
+    ctx.globalAlpha=1;
+    if(t<until||particles.length){requestAnimationFrame(animate);}else{running=false;ctx.clearRect(0,0,w,h);}
+  }
+  function launch(ms=6000) {until=Math.max(until,performance.now()+ms);if(!running){running=true;lastBurst=0;requestAnimationFrame(animate);}}
+  $('fireworks-btn').addEventListener('click',()=>launch());
+  tick();setInterval(tick,250);
+})();
+</script>
 </body>
 </html>
