@@ -169,6 +169,39 @@ body{font-family:Inter,"Segoe UI",Arial,Helvetica,sans-serif;background:#08080b;
   .count-head .date {font-size:7px}
 }
 
+
+/* IC-TV HIGH-CONTRAST EDITION: brighter on dark GTA TV textures, no boxes. */
+:root { --white:#ffffff; --muted:#f1e2e7; --red:#ff3c62; --red2:#ff8399; }
+body { background:#24151c; }
+.app {
+  background:
+    radial-gradient(ellipse 62% 73% at 50% 42%, rgba(153,38,68,.43) 0%, rgba(93,24,46,.28) 54%, transparent 88%),
+    radial-gradient(ellipse 37% 36% at 85% 20%, rgba(160,35,59,.20), transparent 78%),
+    linear-gradient(180deg,#261a23 0%,#22151f 48%,#1b1722 100%);
+}
+.app::before { background:radial-gradient(ellipse at center,transparent 57%,rgba(0,0,0,.17) 100%); }
+.stage-glow { border-color:rgba(255,124,149,.20); box-shadow:0 0 112px rgba(252,61,100,.17),inset 0 0 85px rgba(255,88,117,.08); }
+.stage-glow::before,.stage-glow::after { border-color:rgba(255,155,172,.14); }
+.light-sweep { background:linear-gradient(90deg,transparent 33%,rgba(255,90,127,.15) 50%,transparent 67%); }
+.brand-mark { filter:brightness(1.45) contrast(1.09) saturate(1.2) drop-shadow(0 0 13px rgba(255,75,108,.42)); }
+.brand-title { color:#fff; text-shadow:0 1px 10px rgba(255,255,255,.22); }
+.brand-meta { color:#fff0f3; }
+.kicker { color:#fff2f4; text-shadow:0 1px 10px rgba(255,255,255,.18); }
+.headline span {
+  background:linear-gradient(180deg,#ffffff 0%,#fff8f9 28%,#ffd1dc 67%,#ff7891 100%);
+  -webkit-background-clip:text; background-clip:text;
+  filter:drop-shadow(0 0 19px rgba(255,127,154,.43)) drop-shadow(0 0 45px rgba(255,76,114,.18));
+}
+.years { color:#ffffff; text-shadow:0 1px 24px rgba(255,255,255,.22); }
+.years .arrow { color:#ff859c; text-shadow:0 0 13px rgba(255,103,138,.72); }
+.count-head .date { color:#fff4f6; text-shadow:0 1px 9px rgba(255,255,255,.18); }
+.value { color:#ffffff; text-shadow:0 0 18px rgba(255,255,255,.22),0 0 45px rgba(255,180,198,.10); }
+.digit:last-child .value { color:#ffc4d0; text-shadow:0 0 23px rgba(255,153,176,.48),0 0 50px rgba(255,86,122,.18); }
+.name { color:#ffeff3; text-shadow:0 1px 11px rgba(255,255,255,.25); }
+.celebration { background:radial-gradient(ellipse at center,rgba(146,29,65,.96),rgba(27,13,23,.96) 80%); }
+.celebration h2 em { color:#ffd0da; }
+#fireworks { filter:brightness(1.45) saturate(1.15); }
+
 </style>
 </head>
 <body>
@@ -278,7 +311,7 @@ body{font-family:Inter,"Segoe UI",Arial,Helvetica,sans-serif;background:#08080b;
 
   function addBurst(x, y, size = 1, palette = null) {
     const colors = palette || ['#ff3656','#ff6880','#ffb2bf','#ffe7eb','#ffffff','#ff9ca8'];
-    const count = reduce.matches ? 18 : Math.round(36 * size);
+    const count = reduce.matches ? 18 : Math.round(40 * size);
     const base = 1.4 + Math.random()*1.2*size;
     for (let i = 0; i < count; i++) {
       const a = (i / count) * Math.PI * 2;
@@ -289,7 +322,7 @@ body{font-family:Inter,"Segoe UI",Arial,Helvetica,sans-serif;background:#08080b;
         vy: Math.sin(a)*speed,
         life: 1,
         decay: .010 + Math.random()*.010,
-        r: .9 + Math.random()*(2.6*size),
+        r: 1.2 + Math.random()*(2.8*size),
         color: colors[(Math.random()*colors.length)|0]
       });
     }
