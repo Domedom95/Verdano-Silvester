@@ -202,6 +202,65 @@ body { background:#24151c; }
 .celebration h2 em { color:#ffd0da; }
 #fireworks { filter:brightness(1.45) saturate(1.15); }
 
+
+/* FINAL: Brand + presenter readable on in-game GTA TVs without adding boxes. */
+.brand { gap:clamp(12px,1.7vw,22px); isolation:isolate; }
+.brand-mark {
+  width:clamp(86px,8.0vw,130px);
+  height:clamp(71px,6.55vw,106px);
+  filter:brightness(1.7) contrast(1.16) saturate(1.18)
+         drop-shadow(0 0 5px rgba(255,255,255,.42))
+         drop-shadow(0 0 19px rgba(255,70,107,.60));
+}
+.brand-title {
+  font-size:clamp(19px,1.8vw,28px);
+  font-weight:1000;letter-spacing:.13em;
+  color:#fff;
+  text-shadow:0 2px 6px rgba(0,0,0,.9),0 0 18px rgba(255,255,255,.36);
+}
+.brand-meta {
+  font-size:clamp(12px,1.02vw,15px);
+  letter-spacing:.12em;
+  font-weight:950;
+  color:#ffeef1;
+  text-shadow:0 2px 5px rgba(0,0,0,.9),0 0 14px rgba(255,255,255,.18);
+}
+.kicker {
+  font-size:clamp(17px,1.62vw,25px);
+  font-weight:1000;
+  letter-spacing:.14em;
+  color:#fff;
+  text-shadow:0 2px 5px rgba(0,0,0,.95),0 0 14px rgba(255,255,255,.45),0 0 25px rgba(255,80,118,.35);
+}
+.kicker::before,.kicker::after {
+  height:3px;
+  width:clamp(22px,2.3vw,44px);
+  background:linear-gradient(90deg,transparent,#ff869d);
+  box-shadow:0 0 12px rgba(255,100,130,.75);
+}
+@media(max-height:760px) {
+  .brand-mark {width:clamp(70px,7vw,95px);height:clamp(58px,5.9vw,79px)}
+  .brand-title {font-size:clamp(16px,1.7vw,23px)}
+  .brand-meta {font-size:clamp(10px,.92vw,13px)}
+  .kicker {font-size:clamp(15px,1.45vw,21px)}
+}
+@media(max-height:440px) {
+  .header {padding-top:6px;padding-bottom:3px}
+  .brand-mark {width:clamp(45px,7vw,65px);height:clamp(36px,5.9vw,54px)}
+  .brand-title {font-size:clamp(11px,1.85vw,17px)}
+  .brand-meta {font-size:clamp(8px,1.14vw,11px);margin-top:2px}
+  .kicker {font-size:clamp(11px,1.5vw,16px);letter-spacing:.1em}
+  .kicker::before,.kicker::after {width:clamp(12px,2vw,24px);height:2px}
+}
+@media(max-width:520px) and (max-height:320px) {
+  .brand-mark {width:42px;height:35px}
+  .brand-title {font-size:11px}
+  .brand-meta {display:none}
+  .kicker {display:inline-flex;font-size:10px;line-height:1.1;letter-spacing:.06em}
+  .kicker::before,.kicker::after {width:10px}
+  .headline {margin-top:3px}
+}
+
 </style>
 </head>
 <body>
